@@ -13,7 +13,7 @@ import java.util.Stack;
  * dall'aggiunta di archi e nodi, alle visite, al calcolo delle distanze minime.
  * 
  * @author Alessandro Straziota
- * @version 1.0
+ * @version 1.1
  * */
 
 public class Grafo {

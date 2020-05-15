@@ -5,7 +5,7 @@ package Grafi;
  * Tutti gli archi avranno quindi una direzione.
  * 
  * @author Alessandro Straziota
- * @version 1.0
+ * @version 1.1
  * */
 
 public class DiGrafo extends Grafo {
