@@ -71,5 +71,43 @@ public class DiGrafo extends Grafo {
 			System.err.print("Uno o entrambi gli oggetti referenziati non è presente nel grafo.");
 		}
 	}
+	
+	
+	/**
+	 * Metodo che stacca i due nodi indicati nel grafo.
+	 * */
+	public void stacca(Nodo<?> a, Nodo<?> b) {
+		a.stacca(b);
+		pesi.remove(a.getNome() + "," + b.getNome());
+	}
+	
+	/**
+	 * Metodo che stacca i due nodi indicati nel grafo.
+	 * */
+	public void stacca(Object a, Object b) {
+		Nodo<?> na = this.grafo.get(a.toString());
+		Nodo<?> nb = this.grafo.get(b.toString());
+		
+		if( na != null && nb != null ) {
+			na.stacca(nb);
+			pesi.remove(na.getNome() + "," + nb.getNome());
+		} else {
+			System.err.print("Uno o entrambi gli oggetti referenziati non è presente nel grafo.");
+		}
+	}
+	
+	
+	/**
+	 * Metodo che rimuove un nodo da un grafo.
+	 * */
+	public void rimuovi(Nodo<?> v) {
+		/* stacco v dagli altri nodi ad esso adiacenti */
+		for( Nodo<?> u : v.getAdiacenti() ) {
+			u.getAdiacenti().remove(v);
+			pesi.remove(v.getNome() + "," + u.getNome());
+			pesi.remove(u.getNome() + "," + v.getNome());
+		}
+		grafo.remove(v.getNome());
+	}
 
 }

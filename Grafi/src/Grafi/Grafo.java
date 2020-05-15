@@ -1,9 +1,11 @@
 package Grafi;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -135,14 +137,83 @@ public class Grafo {
 	}
 	
 	
+	/**
+	 * Metodo che stacca i due nodi indicati nel grafo.
+	 * */
+	public void stacca(Nodo<?> a, Nodo<?> b) {
+		a.stacca(b);
+		b.stacca(a);
+		pesi.remove(a.getNome() + "," + b.getNome());
+		pesi.remove(b.getNome() + "," + a.getNome());
+	}
 	
 	
+	/**
+	 * Metodo che stacca i due nodi indicati nel grafo.
+	 * */
+	public void stacca(Object a, Object b) {
+		Nodo<?> na = this.grafo.get(a.toString());
+		Nodo<?> nb = this.grafo.get(b.toString());
+		
+		if( na != null && nb != null ) {
+			na.stacca(nb);
+			nb.stacca(na);
+			pesi.remove(na.getNome() + "," + nb.getNome());
+			pesi.remove(nb.getNome() + "," + na.getNome());
+		} else {
+			System.err.print("Uno o entrambi gli oggetti referenziati non è presente nel grafo.");
+		}
+	}
+	
+	/**
+	 * Metodo che rimuove un nodo da un grafo.
+	 * */
+	public void rimuovi(Nodo<?> v) {
+		/* stacco v dagli altri nodi ad esso adiacenti */
+		for( Nodo<?> u : v.getAdiacenti() ) {
+			u.getAdiacenti().remove(v);
+			pesi.remove(v.getNome() + "," + u.getNome());
+			pesi.remove(u.getNome() + "," + v.getNome());
+		}
+		grafo.remove(v.getNome());
+	}
+	
+	
+	/**
+	 * Metodo che rimuove un nodo da un grafo
+	 * */
+	public void rimuovi(Object v) {
+		/* stacco v dagli altri nodi ad esso adiacenti */
+		Nodo<?> w = grafo.get(v.toString());
+			if( w != null ) {
+			for( Nodo<?> u : w.getAdiacenti() ) {
+				u.getAdiacenti().remove(w);
+				pesi.remove(w.getNome() + "," + u.getNome());
+				pesi.remove(u.getNome() + "," + w.getNome());
+			}
+			grafo.remove(w.getNome());
+		} else {
+			System.err.println("L'oggetto indicato non è presente all'interno del grafo.");
+		}
+	}
+	
+	
+	
+	/**
+	 * Metodo che mostra a schermo ogni nodo del grafo con la
+	 * rispettiva lista di adiacenza.
+	 * */
 	public void mostra() {
+		
+		System.out.println("\n");
+		
 		for(String key : grafo.keySet()) {
 			
 			System.out.println(grafo.get(key) + " ---> " +
 					grafo.get(key).getAdiacenti());
 		}
+		
+		System.out.println("\n");
 	}
 	
 	
@@ -262,6 +333,81 @@ public class Grafo {
 		}
 		
 		System.out.println("Dijkstra:\n"+Visita);
-
+	}
+	
+	/**
+	 * Metodo che ritorna un array con gli archi del grafo in formato String "nodoA,nodoB".
+	 * @return edges
+	 * */
+	public String[] getEdges() {
+		Object[] E = pesi.keySet().toArray();
+		String[] S = new String[E.length];
+		for(int i = 0; i < E.length; i++) 
+			S[i] = E[i].toString();
+		return S;
+		
+	}
+	
+	/**
+	 * Metodo che ritorna un array con gli archi del grafo in formato String "nodoA,nodoB",
+	 * ordinati in senso non decrescente di peso.
+	 * L'algoritmo di ordinamento e' il bubblesort, quindi la complessita' e' O(n^2).
+	 * @return sorted edges
+	 * */
+	public String[] getSortedEdges() {
+		String[] E = (String[]) this.getEdges();
+		String t;
+		int i = 0;
+		int k = 0;
+		
+		for(k = 0; k < E.length-1; k++) {
+			for(i = 0; i < E.length-1-k; i++) {
+				if( this.pesi.get(E[i]) > this.pesi.get(E[i+1]) ) {
+					t = E[i];
+					E[i] = E[i+1];
+					E[i+1] = t;
+				}
+			}
+		}
+		
+		return E;
+	}
+	
+	
+	/**
+	 * Algoritmo di Kruskal per MST.
+	 * */
+	public Set<String> Kruskal() {
+		String[] E = this.getSortedEdges();
+		
+		QuickFind U = new QuickFind();
+		
+		for (Nodo<?> u : this.grafo.values()) {
+			U.makeSet(u);
+		}
+		
+		Set<String> T = new HashSet<String>();
+		
+		
+		String[] uv;
+		Nodo<?> u;
+		Nodo<?> v;
+		for(String e : E) {
+			
+			uv = e.split(",");
+			u = this.grafo.get(uv[0]);
+			v = this.grafo.get(uv[1]);
+			
+			
+			
+			if( ! U.find(u).equals( U.find(v) ) ) {
+				T.add(e);
+				U.union(U.find(u), U.find(v));
+			}
+			
+		}
+		
+		return T;
+	
 	}
 }

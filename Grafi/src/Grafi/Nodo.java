@@ -35,6 +35,11 @@ public class Nodo<E> {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void append(Nodo e) { adiacenza.add(e); }
 	
+	/**
+	 * Rimuove il nodo e dalla lista di adiacenza del nodo chiamante.
+	 * */
+	public void stacca(Nodo<?> e) { adiacenza.remove(e); }
+	
 	public String toString() { return nome; }
 	
 	public void mark() { mark = true; }
@@ -42,5 +47,10 @@ public class Nodo<E> {
 	public void unmark() { mark = false; }
 	
 	public boolean isMarked() { return mark; }
+	
+	public void setContenuto(E e) { this.contenuto = e; }
+	
+	@Deprecated
+	public void changeName(String newName) { this.nome = newName; }
 
 }

@@ -52,14 +52,37 @@ public class Runner {
 		
 		G1.Dijkstra(e1);
 		
-		String asd = "adasdasd";
-		G.add("adasdasd");
-		G.add(G1);
-		G.arco(asd, G1,0);
-		G.arco(a, G1, 0.3);
-		G.mostra();
-		System.out.println(G1);
+//		String asd = "adasdasd";
+//		G.add("adasdasd");
+//		G.add(G1);
+//		G.arco(asd, G1,0);
+//		G.arco(a, G1, 0.3);
+//		G.mostra();
+		//System.out.println(G1);
 		G.Dijkstra(a);
+		
+
+		
+//		QuickFind qf = new QuickFind();
+//		for(int i = 1; i <= 6; i++) {
+//			qf.makeSet(i);
+//		}
+//		qf.mostra();
+//		qf.union("2", "3");
+//		qf.mostra();
+//		System.out.println(qf.find(1));
+//		System.out.println(qf.find(2));
+//		qf.union("6", "2");
+//		qf.mostra();
+//		System.out.println(qf.find(3));
+//		qf.union("5", "1");
+//		qf.mostra();
+//		System.out.println(qf.find(1));
+//		qf.union("6", "5");
+//		qf.mostra();
+//		System.out.println(qf.find(1));
+		
+		System.out.println(G.Kruskal());
 		
 	}
 
