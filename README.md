@@ -1,2 +1,2 @@
 # ProgettiJava
-Repository condivisa per progetti in JavaScript
+Repository condivisa per progetti in Java
