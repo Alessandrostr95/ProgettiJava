@@ -2,12 +2,15 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.regex.*;
-
+/**
+ * Versione stabile del Clien Mail
+ * @version 0.2
+ */
 class ClientMail {
 
     private static final String nomaServer = "localhost";
     private static final int port = 1805;
-    private static final String version = "0.1";
+    private static final String version = "0.2";
 
 
     public static void main(String[] args) throws Exception {
@@ -64,7 +67,7 @@ class ClientMail {
                     break;
                 
                 case "EXIT":
-                    System.out.println("Arrivederci!");
+                    //System.out.println("Arrivederci!");
                     out_stream.writeBytes("EXIT");
                     break;
 
@@ -184,31 +187,39 @@ class ClientMail {
                     break;
                 
                 case "GET":
-                    System.out.println("Quale mail vuoi leggere?");
-                    MSG = tastiera.readLine();
-                    out_stream.writeBytes("GET_" + MSG +"\n");
-                    MSG = in_stream.readLine();
-                    
-                    if( ! MSG.equals("OK") ) System.out.println("Qualcosa e' andato storto. Controlla il formato del comando.");
+                    try{
+                        System.out.println("Quale mail vuoi leggere?");
+                        MSG = String.valueOf(Integer.valueOf(tastiera.readLine())-1);
+                        out_stream.writeBytes("GET_" + MSG +"\n");
+                        MSG = in_stream.readLine();
+                        
+                        if( ! MSG.equals("OK") ) System.out.println("Messaggio inesistente.");
 
-                    else {
-                        /* se si riceve come risposta OK verranno scritti in ordine:
-                            1. il numero di righe del messaggio da dover leggere, comprese di intestazioni varie
-                            2. la mail suddivisa in righe da dover stampare. */
-                        int k = Integer.valueOf( in_stream.readLine() );
-                        for ( int i = 0; i < k; i++ ) {
-                            System.out.println( in_stream.readLine() );
+                        else {
+                            /* se si riceve come risposta OK verranno scritti in ordine:
+                                1. il numero di righe del messaggio da dover leggere, comprese di intestazioni varie
+                                2. la mail suddivisa in righe da dover stampare. */
+                            int k = Integer.valueOf( in_stream.readLine() );
+                            for ( int i = 0; i < k; i++ ) {
+                                System.out.println( in_stream.readLine() );
+                            }
                         }
+                    } catch (Exception e) {
+                        System.out.println("Prego inserire parametri corretti.");
                     }
                     //in_stream.reset();
                     break;
                 
                 case "DEL":
-                    System.out.println("Indicare il numero dell'email che si desidera eliminare.");
-                    MSG = tastiera.readLine();
-                    out_stream.writeBytes("DEL_"+MSG+"\n");
-                    if ( in_stream.readLine().equals("OK") ) System.out.println("Messaggio rimosso.");
-                    else System.out.println("Qualcosa e' andato storto.");
+                    try {
+                        System.out.println("Indicare il numero dell'email che si desidera eliminare.");
+                        MSG = String.valueOf(Integer.valueOf(tastiera.readLine())-1);
+                        out_stream.writeBytes("DEL_"+MSG+"\n");
+                        if ( in_stream.readLine().equals("OK") ) System.out.println("Messaggio rimosso.");
+                        else System.out.println("Messaggio inesistente.");
+                    } catch (Exception e) {
+                        System.out.println("Prego inserire parametri corretti.");
+                    }
                     break;
                 
                 case "OUT":
@@ -222,6 +233,8 @@ class ClientMail {
             
 
         }
+
+        System.out.println("Arrivederci!");
 
 
     }

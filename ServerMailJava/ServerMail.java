@@ -3,7 +3,10 @@ import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.*;
-
+/**
+ * Versione stabile del Server Mail
+ * @version 0.2
+ */
 class ServerMail {
     
     private static final int port = 1805;
@@ -20,10 +23,10 @@ class ServerMail {
         while( true ) {
             
             Socket connSocket = ascoltoSocket.accept();
+            System.out.println("CLIENT " + connSocket.getInetAddress() + " CONNECTED.");
             TCPServerThread st = new TCPServerThread(connSocket);
             Thread th = new Thread(st);
             th.start();
-
         }
         
 
@@ -98,7 +101,7 @@ class TCPServerThread implements Runnable {
             }
 
         connSocket.close(); // chiusura del socket
-
+        System.out.println("CLIENT " + connSocket.getInetAddress() + " DISCONNECTED.");
         } catch (Exception e) {  
             e.printStackTrace();
         }
@@ -137,6 +140,7 @@ class TCPServerThread implements Runnable {
                 }
             }
 
+            
             /* ================== SEND PROCEDURE ==================== */
             else if ( richiesta.startsWith("SEND_") ) {
                 
