@@ -149,7 +149,7 @@ class ClientMail {
         while ( ! CMD.equals("OUT") ) {
             
             CMD = tastiera.readLine().toUpperCase();
-
+            //in_stream.mark(100000000);
             switch (CMD) {
                 
                 case "LIST":
@@ -173,7 +173,8 @@ class ClientMail {
                     }
 
                     /* invio al server il messagio in formato:
-                        SEND_TO:destinatario;TXT:#righe\ntesto*/
+                        SEND_TO:destinatario;TXT:#righe\ntesto
+                        */
                     
                     out_stream.writeBytes("SEND_TO:" + destinatario + ";TXT:" + String.valueOf(righe) + "\n" + txt +"\n");
 
@@ -199,6 +200,7 @@ class ClientMail {
                             System.out.println( in_stream.readLine() );
                         }
                     }
+                    //in_stream.reset();
                     break;
                 
                 case "DEL":

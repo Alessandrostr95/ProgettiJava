@@ -131,7 +131,7 @@ class Mail{
         this.FROM = from;
         this.TO = to;
         this.send = send;
-        this.TEXT = text;
+        this.TEXT = text+"\n[Fine Messaggio]";
         this.receive = new Date();
     }
 
@@ -140,11 +140,17 @@ class Mail{
                 "\nTO: " + this.TO + 
                 "\nSEND: " + this.send.toString() +
                 "\nRECEIVED: " + this.receive.toString() +
-                "\n\nTEXT:\n" + this.TEXT + "\n";
+                "\n\nTEXT:\n" + this.TEXT;
     }
 
     public int length() {
         /* ritorna il numero di righe totali più il numero di intestazioni di una mail */
-        return this.TEXT.split("\n").length + 6;
+        int i = 0;
+        Scanner s = new Scanner(this.TEXT);
+        while( s.hasNextLine() ){
+            s.nextLine();
+            i++;
+        }
+        return i + 6;
     }
 }

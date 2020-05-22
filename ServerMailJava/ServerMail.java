@@ -11,7 +11,9 @@ class ServerMail {
     public static HashMap<MailBox,String> passwords = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
-        
+        MailBox a = new MailBox("super");
+        users.put("super", a);
+        passwords.put(a, ".");
         ServerSocket ascoltoSocket = new ServerSocket(ServerMail.port);
         System.out.println("Server multithread in ascolto sulla porta "+ ServerMail.port);
 
@@ -76,7 +78,7 @@ class TCPServerThread implements Runnable {
 
 
                 /* ===================== LOG IN ===================== */
-                if ( richiesta.startsWith("LOG_") ) {
+                else if ( richiesta.startsWith("LOG_") ) {
                     /* messaggio ricevuto dal client:
                         LOG_USR:username;PSW:password*/
                     
@@ -105,32 +107,38 @@ class TCPServerThread implements Runnable {
     public static void SERVE(MailBox MB, BufferedReader in_stream, DataOutputStream out_stream) throws Exception {
         /* In questa modalita' il server attende istruzioni perservire poi il client */
         String richiesta = "";
+        String risposta = "";
 
         while ( ! richiesta.equals("OUT") ) {
 
             richiesta = in_stream.readLine();
+            System.out.println("Messaggio: " + richiesta + "\nDa: " + MB.getName());
 
             /* ================== LIST PROCEDURE ==================== */
-            if( richiesta.equals("LIST") ) out_stream.writeBytes( String.valueOf(MB.numberOfMails()) + "\n" );
+            if( richiesta.equals("LIST") ){
+                out_stream.writeBytes( String.valueOf(MB.numberOfMails()) + "\n" );
+                System.out.println("Risposta: " + String.valueOf(MB.numberOfMails()) + "\n=========");
+            }
 
 
             /* ================== GET PROCEDURE ==================== */
-            if( richiesta.startsWith("GET_") ) {
+            else if( richiesta.startsWith("GET_") ) {
                 try{
                     int index = Integer.valueOf(richiesta.replace("GET_", ""));
                     Mail m = MB.getMail( index );
                     int righe = m.length();
-
-                    out_stream.writeBytes("OK"+"\n");
-                    out_stream.writeBytes( String.valueOf(righe)+"\n" );
-                    out_stream.writeBytes( m.toString() + "\n" );
+                    risposta = "OK\n"+String.valueOf(righe)+"\n"+m.toString();
+                    out_stream.writeBytes(risposta+"\n");
+                    System.out.println("Risposta: " + risposta + "\n=========");
                 } catch(Exception e) {
-                    out_stream.writeBytes("ERR"+"\n");
+                    out_stream.writeBytes("ERR\n");
+                    System.out.println("Risposta: ERR\n=========");
+                    
                 }
             }
 
             /* ================== SEND PROCEDURE ==================== */
-            if ( richiesta.startsWith("SEND_") ) {
+            else if ( richiesta.startsWith("SEND_") ) {
                 
                 try{
                     String[] lines = richiesta.split(";");
@@ -150,13 +158,18 @@ class TCPServerThread implements Runnable {
                         mBoxDest.receiveMail( mes );
 
                         out_stream.writeBytes("OK\n");
+                        System.out.println("MES: "+mes);
+                        System.out.println("Risposta: OK\n=========");
+                        
                     } else {
                         out_stream.writeBytes("ERR\n");
+                        System.out.println("Risposta: ERR\n=========");
                     }
 
                     
                 } catch (Exception e) {
                     out_stream.writeBytes("ERR\n");
+                    System.out.println("Risposta: OK\n=========");
                 }
 
             }
@@ -164,7 +177,7 @@ class TCPServerThread implements Runnable {
 
 
             /* ================== DEL PROCEDURE ==================== */
-            if( richiesta.startsWith("DEL_") ) {
+            else if( richiesta.startsWith("DEL_") ) {
 
                 try {
                     int index = Integer.valueOf( richiesta.replace("DEL_", "") );
