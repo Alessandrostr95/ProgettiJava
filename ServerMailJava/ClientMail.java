@@ -4,13 +4,13 @@ import java.util.*;
 import java.util.regex.*;
 /**
  * Versione stabile del Clien Mail
- * @version 0.2
+ * @version 0.3
  */
 class ClientMail {
 
     private static final String nomaServer = "localhost";
     private static final int port = 1805;
-    private static final String version = "0.2";
+    private static final String version = "0.3";
 
 
     public static void main(String[] args) throws Exception {
@@ -163,7 +163,7 @@ class ClientMail {
 
                 case "SEND":
                     System.out.println("A chi vuoi inviare il messaggio?");
-                    String destinatario = tastiera.readLine();
+                    String destinatario = tastiera.readLine().toLowerCase();
                     System.out.println("Inserire in testo. Scrivi [end] una volta terminato il messaggio");
                     String txt = "" ;
                     int righe = 1;

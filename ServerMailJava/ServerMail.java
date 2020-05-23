@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.regex.*;
 /**
  * Versione stabile del Server Mail
- * @version 0.2
+ * @version 0.3
  */
 class ServerMail {
     
