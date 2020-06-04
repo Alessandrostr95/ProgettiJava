@@ -1,0 +1,11 @@
+FROM: alessandro
+TO: alessandro
+SEND: Sun May 24 18:18:43 CEST 2020
+RECEIVED: Sun May 24 18:18:43 CEST 2020
+
+TEXT:
+
+ciao :)
+spero vada tutto bene
+
+[Fine Messaggio]

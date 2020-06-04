@@ -1,0 +1,10 @@
+FROM: super
+TO: alessandro
+SEND: Sun May 24 18:20:00 CEST 2020
+RECEIVED: Sun May 24 18:20:00 CEST 2020
+
+TEXT:
+
+questo � una prova da parte del superuser
+
+[Fine Messaggio]

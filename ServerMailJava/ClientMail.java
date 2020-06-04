@@ -4,13 +4,13 @@ import java.util.*;
 import java.util.regex.*;
 /**
  * Versione stabile del Clien Mail
- * @version 0.3
+ * @version 0.5
  */
 class ClientMail {
 
-    private static final String nomaServer = "localhost";
+    private static final String nomaServer = "2.39.157.109";
     private static final int port = 1805;
-    private static final String version = "0.3";
+    private static final String version = "0.5";
 
 
     public static void main(String[] args) throws Exception {

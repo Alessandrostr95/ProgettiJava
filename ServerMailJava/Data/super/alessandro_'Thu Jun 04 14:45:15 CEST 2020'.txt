@@ -1,0 +1,12 @@
+FROM: alessandro
+TO: super
+SEND: Thu Jun 04 14:45:15 CEST 2020
+RECEIVED: Thu Jun 04 14:45:15 CEST 2020
+
+TEXT:
+
+Ciao,
+oggi � una bella giornata.
+;)
+
+[Fine Messaggio]

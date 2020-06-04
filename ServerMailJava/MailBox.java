@@ -21,7 +21,7 @@ class MailBox {
     public static boolean exist(String name) { return MailBox.allNames.contains(name); }
 
     /*  FROM - SEND - TEXT */
-    public void receiveMail(String msg) throws Exception {
+    public Mail receiveMail(String msg) throws Exception {
         /*  formato del messaggio
             FROM:mit\n
             SEND:data\n
@@ -58,13 +58,13 @@ class MailBox {
             for (int i = 3; i < lines.size(); i++) {
                 txt = txt+"\n"+lines.get(i);
             }
-
-           this.mails.add( new Mail(mittente, destinatario, send, txt) );
+            Mail m = new Mail(mittente, destinatario, send, txt);
+            this.mails.add( m );
+            return m;
 
         } catch (Exception e) {
             throw new IllegalArgumentException("Formato messagio non valido. Riprovare");
         }
-
     }
 
     public void showMails() {
@@ -82,6 +82,8 @@ class MailBox {
         this.mails.remove(index);
     }
 
+    public void addMail(Mail m) { this.mails.add(m); }
+
     public String getName() { return this.name; }
 
     public int numberOfMails() { return this.mails.size(); }
@@ -95,6 +97,7 @@ class MailBox {
         String mes1 = "FROM:mittente1\nSEND:" + form.format(ora) +"\nTEXT:Ciao\nSpero tu stia bene.\nSaluti.";
         String mes2 = "FROM:mittente2\nSEND:" + form.format(ora) +"\nTEXT:Ciao\nSono il mittente 2\n;)\n\n\ne";
         MailBox M = new MailBox("alessandro");
+        System.out.println(mes1);
         M.receiveMail(mes1);
         M.receiveMail(mes2);
         M.showMails();
@@ -121,11 +124,19 @@ class MailBox {
 */
 
 class Mail{
-    private String FROM;
-    private String TO;
-    private Date send;
-    private Date receive;
-    private String TEXT;
+    public String FROM;
+    public String TO;
+    public Date send;
+    public Date receive;
+    public String TEXT;
+
+    public Mail(){
+        this.FROM = "";
+        this.TO = "";
+        this.send = null;
+        this.TEXT = "";
+        this.receive = null; 
+    }
 
     public Mail(String from, String to, Date send, String text){
         this.FROM = from;
@@ -134,6 +145,12 @@ class Mail{
         this.TEXT = text+"\n[Fine Messaggio]";
         this.receive = new Date();
     }
+
+    public String to() { return this.TO; }
+
+    public String from() { return this.FROM; }
+
+    public Date when() { return this.receive; }
 
     public String toString() {
         return  "FROM: " + this.FROM +

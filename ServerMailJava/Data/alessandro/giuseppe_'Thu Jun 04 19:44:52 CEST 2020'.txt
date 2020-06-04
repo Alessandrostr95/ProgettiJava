@@ -1,0 +1,13 @@
+FROM: giuseppe
+TO: alessandro
+SEND: Thu Jun 04 19:44:52 CEST 2020
+RECEIVED: Thu Jun 04 19:44:52 CEST 2020
+
+TEXT:
+
+Ciao,
+questo e' un messaggio di prova.
+;)
+
+
+[Fine Messaggio]

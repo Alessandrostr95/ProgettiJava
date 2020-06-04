@@ -1,0 +1,10 @@
+FROM: alessandro
+TO: giuseppe
+SEND: Thu Jun 04 19:45:45 CEST 2020
+RECEIVED: Thu Jun 04 19:45:45 CEST 2020
+
+TEXT:
+
+grazie per la mail di prova.
+
+[Fine Messaggio]
