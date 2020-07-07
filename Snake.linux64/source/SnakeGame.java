@@ -25,6 +25,7 @@ int xFood;
 int yFood;
 int rate = 10;
 boolean alive = true;
+int score = 0;
 
 
 public void setup() {
@@ -45,6 +46,17 @@ public void draw(){
   else if( !alive ) {
     s.c = color(255,0,0);
     s.show(risoluzione);
+    fill(100);
+    stroke(255,250,0);
+    strokeWeight(10);
+    rect(width/4,height/4,500,300);
+    
+    textSize(50);
+    fill(255,250,0);
+    textAlign(CENTER,BOTTOM);
+    text("SCORE: " + score, width/2,height/2-25); 
+
+    
     noLoop();
   }
   
@@ -54,11 +66,6 @@ public void draw(){
       strokeWeight(0.5f);
       noFill();
       rect(j * risoluzione, i * risoluzione, risoluzione, risoluzione);
-      /*if( j == s.x && i == s.y){
-        fill(0,200,0);
-        noStroke();
-        rect(j * risoluzione + 3, i * risoluzione + 3, risoluzione - 6, risoluzione - 6);
-      }*/
       fill(255,250,0);
       noStroke();
       rect(xFood * risoluzione + 3, yFood * risoluzione + 3, risoluzione - 6, risoluzione - 6);
@@ -66,6 +73,7 @@ public void draw(){
       if(s.x == xFood && s.y == yFood) {
           xFood = floor(random(0,colonne));
           yFood = floor(random(0,righe));
+          score += 10;
           s.mangia();
           rate ++;
       }
@@ -81,18 +89,6 @@ public void draw(){
 public void mousePressed(){
   w.add(mouseX - mouseX%risoluzione,mouseY - mouseY%risoluzione);
 }
-
-
-/*
-void moove() {
-  switch(dir){
-    case 'w':  s.x = (s.x - 1 + righe) % righe; break;
-    case 's':  s.x = (s.x + 1 + righe) % righe; break;
-    case 'a':  s.y = (s.y - 1 + colonne) % colonne; break;
-    case 'd':  s.y = (s.y + 1 + colonne) % colonne; break;
-  }
-}
-*/
 
 
 public void keyPressed(){
